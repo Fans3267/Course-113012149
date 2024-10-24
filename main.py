@@ -1,18 +1,17 @@
 from fastapi import FastAPI
-
+from pydantic import BaseModel
 app = FastAPI()
-class Item():
+
+class Item(BaseModel):
     name: str
-    description: str | None = None
+    price: float
+    description:str = None
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return {"Hello":"World"}
 
-@app.get("/hello")
-def read_root():
-    return {"I'm not saying hello"}
-
-@app.post("/items/")
-def create_item(item: Item):
-    return {"message": "Item created"}
+@app.post ("/items/")
+def create_item(item:Item):
+    print(f"Received Item: {item}")
+    return {"message"}
